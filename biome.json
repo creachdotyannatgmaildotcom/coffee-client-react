@@ -17,7 +17,26 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "style": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "patterns": [
+              {
+                "group": [
+                  "@/features/*/api/*",
+                  "@/features/*/components/*",
+                  "@/features/*/hooks/*",
+                  "@/features/*/schemas/*",
+                  "@/features/*/stores/*"
+                ],
+                "message": "Importer une feature uniquement via son barrel public (index.ts) — jamais ses sous-dossiers internes."
+              }
+            ]
+          }
+        }
+      }
     }
   },
   "javascript": {
