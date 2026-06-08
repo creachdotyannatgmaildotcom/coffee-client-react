@@ -8,3 +8,4 @@ Chaque étape est documentée, validée (`typecheck && lint && test && build`), 
 | 00 | Scaffold | [00-scaffold.md](./00-scaffold.md) | `step-00-scaffold` |
 | 01 | Tooling | [01-tooling.md](./01-tooling.md) | `step-01-tooling` |
 | 02 | Architecture | [02-architecture.md](./02-architecture.md) | `step-02-architecture` |
+| 03 | UI Foundation | [03-ui-foundation.md](./03-ui-foundation.md) | `step-03-ui-foundation` |
