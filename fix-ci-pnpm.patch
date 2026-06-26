@@ -1,0 +1,16 @@
+diff --git a/package.json b/package.json
+index 308fd6a..3147f79 100644
+--- a/package.json
++++ b/package.json
+@@ -3,6 +3,11 @@
+   "private": true,
+   "version": "0.0.0",
+   "type": "module",
++  "packageManager": "pnpm@11.9.0",
++  "engines": {
++    "node": ">=24",
++    "pnpm": ">=11"
++  },
+   "scripts": {
+     "dev": "vite",
+     "build": "tsc -b && vite build",
