@@ -12,17 +12,21 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b --noEmit",
-    "lint": "biome lint .",
+    "lint": "biome lint . && eslint --cache --max-warnings 0 .",
     "format": "biome format --write .",
     "check": "biome check --write .",
     "test": "vitest run",
     "test:watch": "vitest",
     "preview": "vite preview",
-    "verify": "pnpm typecheck && biome ci . && pnpm test && pnpm build",
+    "verify": "pnpm typecheck && biome ci . && eslint --cache --max-warnings 0 . && pnpm test && pnpm build",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,css,md}": [
+    "*.{ts,tsx}": [
+      "biome check --write --no-errors-on-unmatched",
+      "eslint --cache --no-warn-ignored --max-warnings 0"
+    ],
+    "*.{js,jsx,json,css,md}": [
       "biome check --write --no-errors-on-unmatched"
     ]
   },
@@ -52,11 +56,14 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^10.6.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.7",
     "shadcn": "^4.10.0",
     "typescript": "~6.0.2",
+    "typescript-eslint": "^8.62.1",
     "vite": "^8.0.12",
     "vitest": "^4.1.9"
   }

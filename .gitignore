@@ -25,3 +25,6 @@ dist-ssr
 
 # Claude Code session/tooling state (local only)
 .claude/
+
+# ESLint
+.eslintcache
