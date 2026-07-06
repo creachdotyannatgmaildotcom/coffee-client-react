@@ -1,5 +1,6 @@
 import type { QueryClient } from '@tanstack/react-query'
 import { createRouter, type RouterHistory } from '@tanstack/react-router'
+import { DefaultNotFound } from '@/app/default-not-found'
 import { routeTree } from '@/routeTree.gen'
 
 // Fabrique unique du routeur : l'application l'utilise avec l'history
@@ -14,6 +15,7 @@ export function createAppRouter(queryClient: QueryClient, history?: RouterHistor
     // c'est React Query qui décide de la fraîcheur, pas le routeur.
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
+    defaultNotFoundComponent: DefaultNotFound,
     ...(history ? { history } : {}),
   })
 }

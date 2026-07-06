@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import type { Locale } from '@/shared/config/i18n'
 import { formatPrice } from '@/shared/money/money'
 import type { Coffee } from '../schemas/coffee'
@@ -12,12 +13,15 @@ export function CoffeeList({ coffees, locale }: { coffees: Coffee[]; locale: Loc
   return (
     <ul className="flex flex-col gap-2">
       {coffees.map((coffee) => (
-        <li
-          key={coffee.id}
-          className="flex items-center justify-between rounded-lg border border-border p-3"
-        >
-          <span>{coffee.name}</span>
-          <span className="text-muted-foreground">{formatPrice(coffee.price, locale)}</span>
+        <li key={coffee.id}>
+          <Link
+            to="/$locale/coffees/$coffeeId"
+            params={{ locale, coffeeId: coffee.id }}
+            className="flex items-center justify-between rounded-lg border border-border p-3 transition-colors hover:bg-muted"
+          >
+            <span>{coffee.name}</span>
+            <span className="text-muted-foreground">{formatPrice(coffee.price, locale)}</span>
+          </Link>
         </li>
       ))}
     </ul>

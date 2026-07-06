@@ -1,5 +1,6 @@
-import { keepPreviousData, queryOptions } from '@tanstack/react-query'
+import { keepPreviousData, type QueryClient, queryOptions } from '@tanstack/react-query'
 import { getCoffee, listCoffeesPaged } from '../api/coffees'
+import type { Coffee, CoffeePage } from '../schemas/coffee'
 
 export const PAGE_SIZE = 10
 
@@ -23,9 +24,23 @@ export function coffeesPageOptions(page: number, size: number = PAGE_SIZE) {
   })
 }
 
-export function coffeeDetailOptions(id: number) {
+// Seed-from-list : si le café est déjà passé dans une page de liste en cache
+// (ou dans le cache détail), on peut l'afficher immédiatement pendant que la
+// version fraîche arrive en arrière-plan.
+export function coffeeFromCache(queryClient: QueryClient, id: number): Coffee | undefined {
+  const detail = queryClient.getQueryData<Coffee>(coffeeKeys.detail(id))
+  if (detail) return detail
+  for (const [, page] of queryClient.getQueriesData<CoffeePage>({ queryKey: coffeeKeys.lists() })) {
+    const hit = page?.content.find((coffee) => coffee.id === id)
+    if (hit) return hit
+  }
+  return undefined
+}
+
+export function coffeeDetailOptions(queryClient: QueryClient, id: number) {
   return queryOptions({
     queryKey: coffeeKeys.detail(id),
     queryFn: () => getCoffee(id),
+    placeholderData: () => coffeeFromCache(queryClient, id),
   })
 }

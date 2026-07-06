@@ -16,3 +16,4 @@ Pour refaire tout le parcours depuis zéro, commande par commande : [le tutoriel
 | 06 | Routage (TanStack Router + proxy API) | [06-router.md](./06-router.md) | `step-06-router` |
 | 07 | Données (Query + adapter Zod + Money) | [07-query-money.md](./07-query-money.md) | `step-07-query-money` |
 | 08 | Pagination pilotée par l'URL | [08-pagination.md](./08-pagination.md) | `step-08-pagination` |
+| 09 | Détail et sémantique d'erreur | [09-detail.md](./09-detail.md) | `step-09-detail` |

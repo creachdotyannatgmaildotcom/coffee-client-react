@@ -13,6 +13,7 @@ import { Route as LocaleRouteRouteImport } from './routes/$locale/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
 import { Route as LocaleCoffeesIndexRouteImport } from './routes/$locale/coffees/index'
+import { Route as LocaleCoffeesCoffeeIdRouteImport } from './routes/$locale/coffees/$coffeeId'
 
 const LocaleRouteRoute = LocaleRouteRouteImport.update({
   id: '/$locale',
@@ -34,16 +35,23 @@ const LocaleCoffeesIndexRoute = LocaleCoffeesIndexRouteImport.update({
   path: '/coffees/',
   getParentRoute: () => LocaleRouteRoute,
 } as any)
+const LocaleCoffeesCoffeeIdRoute = LocaleCoffeesCoffeeIdRouteImport.update({
+  id: '/coffees/$coffeeId',
+  path: '/coffees/$coffeeId',
+  getParentRoute: () => LocaleRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/coffees/$coffeeId': typeof LocaleCoffeesCoffeeIdRoute
   '/$locale/coffees/': typeof LocaleCoffeesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleIndexRoute
+  '/$locale/coffees/$coffeeId': typeof LocaleCoffeesCoffeeIdRoute
   '/$locale/coffees': typeof LocaleCoffeesIndexRoute
 }
 export interface FileRoutesById {
@@ -51,14 +59,26 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
+  '/$locale/coffees/$coffeeId': typeof LocaleCoffeesCoffeeIdRoute
   '/$locale/coffees/': typeof LocaleCoffeesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$locale' | '/$locale/' | '/$locale/coffees/'
+  fullPaths:
+    | '/'
+    | '/$locale'
+    | '/$locale/'
+    | '/$locale/coffees/$coffeeId'
+    | '/$locale/coffees/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$locale' | '/$locale/coffees'
-  id: '__root__' | '/' | '/$locale' | '/$locale/' | '/$locale/coffees/'
+  to: '/' | '/$locale' | '/$locale/coffees/$coffeeId' | '/$locale/coffees'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/$locale/'
+    | '/$locale/coffees/$coffeeId'
+    | '/$locale/coffees/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -96,16 +116,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleCoffeesIndexRouteImport
       parentRoute: typeof LocaleRouteRoute
     }
+    '/$locale/coffees/$coffeeId': {
+      id: '/$locale/coffees/$coffeeId'
+      path: '/coffees/$coffeeId'
+      fullPath: '/$locale/coffees/$coffeeId'
+      preLoaderRoute: typeof LocaleCoffeesCoffeeIdRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
   }
 }
 
 interface LocaleRouteRouteChildren {
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleCoffeesCoffeeIdRoute: typeof LocaleCoffeesCoffeeIdRoute
   LocaleCoffeesIndexRoute: typeof LocaleCoffeesIndexRoute
 }
 
 const LocaleRouteRouteChildren: LocaleRouteRouteChildren = {
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleCoffeesCoffeeIdRoute: LocaleCoffeesCoffeeIdRoute,
   LocaleCoffeesIndexRoute: LocaleCoffeesIndexRoute,
 }
 
