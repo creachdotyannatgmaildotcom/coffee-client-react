@@ -46,7 +46,16 @@ function CoffeesPage() {
 
   return (
     <section className={`flex flex-col gap-4 ${query.isPlaceholderData ? 'opacity-60' : ''}`}>
-      <h2 className="text-xl font-semibold">Nos cafés</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Nos cafés</h2>
+        <Link
+          to="/$locale/coffees/new"
+          params={{ locale }}
+          className="text-sm underline underline-offset-4"
+        >
+          + Ajouter un café
+        </Link>
+      </div>
       <CoffeeList coffees={content} locale={locale} />
       <nav aria-label="Pagination" className="flex items-center justify-between text-sm">
         <Link

@@ -20,6 +20,7 @@ Ce qu'on construit : le squelette d'une application React moderne (juillet 2026)
 | 07 | Données : TanStack Query + adapter Zod + Money | [steps/07-query-money.md](./steps/07-query-money.md) |
 | 08 | Pagination pilotée par l'URL | [steps/08-pagination.md](./steps/08-pagination.md) |
 | 09 | Détail et sémantique d'erreur | [steps/09-detail.md](./steps/09-detail.md) |
+| 10 | Création : formulaire + boucle 400→champ | [steps/10-create.md](./steps/10-create.md) |
 
 > **Convention de lecture** : les blocs `bash` sont des commandes à taper dans le terminal,
 > depuis le dossier du projet (sauf mention contraire). Les blocs avec un nom de fichier en

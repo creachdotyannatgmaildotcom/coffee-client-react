@@ -3,6 +3,7 @@ import { RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import '@/shared/config/zod-locale'
 import { createAppQueryClient } from '@/app/query-client'
 import { createAppRouter } from '@/app/router'
 

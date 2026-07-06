@@ -1,8 +1,10 @@
 // Point d'entrée public de la feature "coffees" — seul chemin d'import autorisé
 // depuis l'extérieur (app/, routes/, autres features). Les sous-dossiers
 // (api, components, hooks, queries, schemas) ne s'importent jamais directement.
+export { CoffeeCreateForm } from './components/coffee-create-form'
 export { CoffeeDetail } from './components/coffee-detail'
 export { CoffeeList } from './components/coffee-list'
+export { useCreateCoffee } from './hooks/use-create-coffee'
 export {
   coffeeDetailOptions,
   coffeeFromCache,

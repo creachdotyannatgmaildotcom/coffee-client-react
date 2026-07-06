@@ -11,6 +11,21 @@ export function toWirePrice(money: Money): number {
   return money.amount
 }
 
+// Saisie du formulaire de création : l'utilisateur tape un prix en EUROS
+// ("4.20"), le schéma le transforme en Money (centimes). Aucun message
+// personnalisé ici : les defaults Zod (locale fr) s'appliquent.
+export const CoffeeCreateSchema = z.object({
+  name: z.string().trim().min(1).max(60),
+  price: z
+    .string()
+    .transform((raw) => Number(raw.replace(',', '.')))
+    .pipe(z.number().positive())
+    .transform((euros) => eur(Math.round(euros * 100))),
+})
+
+export type CoffeeCreateInput = z.input<typeof CoffeeCreateSchema>
+export type CoffeeCreate = z.output<typeof CoffeeCreateSchema>
+
 export const CoffeeSchema = z.object({
   id: z.number().int(),
   name: z.string(),

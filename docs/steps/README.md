@@ -17,3 +17,4 @@ Pour refaire tout le parcours depuis zéro, commande par commande : [le tutoriel
 | 07 | Données (Query + adapter Zod + Money) | [07-query-money.md](./07-query-money.md) | `step-07-query-money` |
 | 08 | Pagination pilotée par l'URL | [08-pagination.md](./08-pagination.md) | `step-08-pagination` |
 | 09 | Détail et sémantique d'erreur | [09-detail.md](./09-detail.md) | `step-09-detail` |
+| 10 | Création : formulaire + boucle 400→champ | [10-create.md](./10-create.md) | `step-10-create` |
