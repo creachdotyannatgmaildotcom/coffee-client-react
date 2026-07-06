@@ -9,6 +9,11 @@ export function createAppRouter(queryClient: QueryClient, history?: RouterHistor
   return createRouter({
     routeTree,
     context: { queryClient },
+    // Survoler un lien précharge sa route (loader compris) : la page suivante
+    // est souvent déjà en cache au moment du clic. staleTime 0 côté routeur :
+    // c'est React Query qui décide de la fraîcheur, pas le routeur.
+    defaultPreload: 'intent',
+    defaultPreloadStaleTime: 0,
     ...(history ? { history } : {}),
   })
 }

@@ -22,6 +22,7 @@ function LocaleLayout() {
           <Link
             to="/$locale/coffees"
             params={{ locale }}
+            search={{ page: 0 }}
             className="text-muted-foreground"
             activeProps={{ className: 'font-semibold text-foreground' }}
           >

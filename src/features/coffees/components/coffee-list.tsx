@@ -1,18 +1,17 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
 import type { Locale } from '@/shared/config/i18n'
 import { formatPrice } from '@/shared/money/money'
-import { coffeesPageOptions } from '../queries/coffees'
+import type { Coffee } from '../schemas/coffee'
 
-export function CoffeeList({ page = 0, locale }: { page?: number; locale: Locale }) {
-  const { data } = useSuspenseQuery(coffeesPageOptions(page))
-
-  if (data.content.length === 0) {
+// Composant présentationnel : la donnée vient d'en haut (la route possède la
+// query, car la page affichée est pilotée par l'URL).
+export function CoffeeList({ coffees, locale }: { coffees: Coffee[]; locale: Locale }) {
+  if (coffees.length === 0) {
     return <p className="text-muted-foreground">Aucun café pour l'instant.</p>
   }
 
   return (
     <ul className="flex flex-col gap-2">
-      {data.content.map((coffee) => (
+      {coffees.map((coffee) => (
         <li
           key={coffee.id}
           className="flex items-center justify-between rounded-lg border border-border p-3"

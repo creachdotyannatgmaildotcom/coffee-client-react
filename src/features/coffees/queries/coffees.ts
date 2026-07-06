@@ -1,4 +1,4 @@
-import { queryOptions } from '@tanstack/react-query'
+import { keepPreviousData, queryOptions } from '@tanstack/react-query'
 import { getCoffee, listCoffeesPaged } from '../api/coffees'
 
 export const PAGE_SIZE = 10
@@ -17,6 +17,9 @@ export function coffeesPageOptions(page: number, size: number = PAGE_SIZE) {
   return queryOptions({
     queryKey: coffeeKeys.list(page, size),
     queryFn: () => listCoffeesPaged(page, size),
+    // Pendant le chargement de la page N+1, on continue d'afficher la page N
+    // au lieu d'un flash de skeleton — la navigation paraît instantanée.
+    placeholderData: keepPreviousData,
   })
 }
 
