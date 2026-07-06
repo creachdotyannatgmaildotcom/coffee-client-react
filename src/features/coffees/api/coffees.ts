@@ -17,3 +17,14 @@ export function createCoffee(input: CoffeeCreate) {
     body: JSON.stringify({ name: input.name, price: toWirePrice(input.price) }),
   })
 }
+
+// PATCH partiel : seuls les champs réellement modifiés partent sur le réseau.
+export function patchCoffee(id: number, patch: Partial<CoffeeCreate>) {
+  const body: Record<string, string | number> = {}
+  if (patch.name !== undefined) body.name = patch.name
+  if (patch.price !== undefined) body.price = toWirePrice(patch.price)
+  return http(`/coffees/${id}`, CoffeeSchema, {
+    method: 'PATCH',
+    body: JSON.stringify(body),
+  })
+}

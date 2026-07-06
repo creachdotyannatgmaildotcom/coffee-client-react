@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/shared/ui/button'
 import { Input } from '@/shared/ui/input'
 import { Label } from '@/shared/ui/label'
-import { useCreateCoffee } from '../hooks/use-create-coffee'
+import { useUpdateCoffee } from '../hooks/use-update-coffee'
 import {
   type Coffee,
   type CoffeeCreate,
@@ -12,37 +12,48 @@ import {
 } from '../schemas/coffee'
 import { applyServerErrors } from './server-errors'
 
-export function CoffeeCreateForm({ onCreated }: { onCreated: (coffee: Coffee) => void }) {
-  const createCoffee = useCreateCoffee()
+export function CoffeeEditForm({ coffee, onSaved }: { coffee: Coffee; onSaved: () => void }) {
+  const updateCoffee = useUpdateCoffee()
   const {
     register,
     handleSubmit,
     setError,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, dirtyFields },
   } = useForm<CoffeeCreateInput, unknown, CoffeeCreate>({
-    // Zod 4 implémente Standard Schema : le resolver générique suffit, sans
-    // couplage à une version précise de Zod.
     resolver: standardSchemaResolver(CoffeeCreateSchema),
+    // `values` (et non defaultValues) : le formulaire reste synchronisé avec
+    // l'état serveur — si le cache change, les champs non touchés suivent.
+    values: {
+      name: coffee.name,
+      price: (coffee.price.amount / 100).toFixed(2),
+    },
+    // En cas de rollback, on garde la saisie de l'utilisateur : il peut
+    // corriger et réessayer sans tout retaper.
+    resetOptions: { keepDirtyValues: true },
   })
 
-  const onSubmit = handleSubmit(async (values) => {
+  const onSubmit = handleSubmit(async (parsed) => {
+    // Filtre dirtyFields : le PATCH ne transporte que ce qui a changé.
+    const patch: Partial<CoffeeCreate> = {}
+    if (dirtyFields.name) patch.name = parsed.name
+    if (dirtyFields.price) patch.price = parsed.price
+    if (Object.keys(patch).length === 0) {
+      onSaved()
+      return
+    }
     try {
-      const coffee = await createCoffee.mutateAsync(values)
-      onCreated(coffee)
+      await updateCoffee.mutateAsync({ id: coffee.id, patch })
+      onSaved()
     } catch (error) {
-      applyServerErrors(error, setError, 'Impossible de créer le café. Réessayez.')
+      applyServerErrors(error, setError, 'La modification a échoué. Réessayez.')
     }
   })
 
   return (
     <form onSubmit={onSubmit} noValidate className="flex flex-col gap-4">
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="coffee-name">Nom</Label>
-        <Input
-          id="coffee-name"
-          aria-invalid={errors.name ? true : undefined}
-          {...register('name')}
-        />
+        <Label htmlFor="edit-name">Nom</Label>
+        <Input id="edit-name" aria-invalid={errors.name ? true : undefined} {...register('name')} />
         {errors.name ? (
           <p role="alert" className="text-destructive text-sm">
             {errors.name.message}
@@ -51,9 +62,9 @@ export function CoffeeCreateForm({ onCreated }: { onCreated: (coffee: Coffee) =>
       </div>
 
       <div className="flex flex-col gap-1.5">
-        <Label htmlFor="coffee-price">Prix (€)</Label>
+        <Label htmlFor="edit-price">Prix (€)</Label>
         <Input
-          id="coffee-price"
+          id="edit-price"
           type="number"
           step="0.01"
           min="0"
@@ -75,7 +86,7 @@ export function CoffeeCreateForm({ onCreated }: { onCreated: (coffee: Coffee) =>
       ) : null}
 
       <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Création…' : 'Créer le café'}
+        {isSubmitting ? 'Enregistrement…' : 'Enregistrer'}
       </Button>
     </form>
   )

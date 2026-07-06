@@ -18,3 +18,4 @@ Pour refaire tout le parcours depuis zéro, commande par commande : [le tutoriel
 | 08 | Pagination pilotée par l'URL | [08-pagination.md](./08-pagination.md) | `step-08-pagination` |
 | 09 | Détail et sémantique d'erreur | [09-detail.md](./09-detail.md) | `step-09-detail` |
 | 10 | Création : formulaire + boucle 400→champ | [10-create.md](./10-create.md) | `step-10-create` |
+| 11 | Édition : PATCH optimiste | [11-patch-optimiste.md](./11-patch-optimiste.md) | `step-11-patch-optimiste` |

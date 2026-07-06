@@ -15,6 +15,7 @@ import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
 import { Route as LocaleCoffeesIndexRouteImport } from './routes/$locale/coffees/index'
 import { Route as LocaleCoffeesNewRouteImport } from './routes/$locale/coffees/new'
 import { Route as LocaleCoffeesCoffeeIdRouteImport } from './routes/$locale/coffees/$coffeeId'
+import { Route as LocaleCoffeesCoffeeIdEditRouteImport } from './routes/$locale/coffees/$coffeeId_.edit'
 
 const LocaleRouteRoute = LocaleRouteRouteImport.update({
   id: '/$locale',
@@ -46,6 +47,12 @@ const LocaleCoffeesCoffeeIdRoute = LocaleCoffeesCoffeeIdRouteImport.update({
   path: '/coffees/$coffeeId',
   getParentRoute: () => LocaleRouteRoute,
 } as any)
+const LocaleCoffeesCoffeeIdEditRoute =
+  LocaleCoffeesCoffeeIdEditRouteImport.update({
+    id: '/coffees/$coffeeId_/edit',
+    path: '/coffees/$coffeeId/edit',
+    getParentRoute: () => LocaleRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByFullPath {
   '/$locale/coffees/$coffeeId': typeof LocaleCoffeesCoffeeIdRoute
   '/$locale/coffees/new': typeof LocaleCoffeesNewRoute
   '/$locale/coffees/': typeof LocaleCoffeesIndexRoute
+  '/$locale/coffees/$coffeeId/edit': typeof LocaleCoffeesCoffeeIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,6 +69,7 @@ export interface FileRoutesByTo {
   '/$locale/coffees/$coffeeId': typeof LocaleCoffeesCoffeeIdRoute
   '/$locale/coffees/new': typeof LocaleCoffeesNewRoute
   '/$locale/coffees': typeof LocaleCoffeesIndexRoute
+  '/$locale/coffees/$coffeeId/edit': typeof LocaleCoffeesCoffeeIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,6 +79,7 @@ export interface FileRoutesById {
   '/$locale/coffees/$coffeeId': typeof LocaleCoffeesCoffeeIdRoute
   '/$locale/coffees/new': typeof LocaleCoffeesNewRoute
   '/$locale/coffees/': typeof LocaleCoffeesIndexRoute
+  '/$locale/coffees/$coffeeId_/edit': typeof LocaleCoffeesCoffeeIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,6 +90,7 @@ export interface FileRouteTypes {
     | '/$locale/coffees/$coffeeId'
     | '/$locale/coffees/new'
     | '/$locale/coffees/'
+    | '/$locale/coffees/$coffeeId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -87,6 +98,7 @@ export interface FileRouteTypes {
     | '/$locale/coffees/$coffeeId'
     | '/$locale/coffees/new'
     | '/$locale/coffees'
+    | '/$locale/coffees/$coffeeId/edit'
   id:
     | '__root__'
     | '/'
@@ -95,6 +107,7 @@ export interface FileRouteTypes {
     | '/$locale/coffees/$coffeeId'
     | '/$locale/coffees/new'
     | '/$locale/coffees/'
+    | '/$locale/coffees/$coffeeId_/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -146,6 +159,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleCoffeesCoffeeIdRouteImport
       parentRoute: typeof LocaleRouteRoute
     }
+    '/$locale/coffees/$coffeeId_/edit': {
+      id: '/$locale/coffees/$coffeeId_/edit'
+      path: '/coffees/$coffeeId/edit'
+      fullPath: '/$locale/coffees/$coffeeId/edit'
+      preLoaderRoute: typeof LocaleCoffeesCoffeeIdEditRouteImport
+      parentRoute: typeof LocaleRouteRoute
+    }
   }
 }
 
@@ -154,6 +174,7 @@ interface LocaleRouteRouteChildren {
   LocaleCoffeesCoffeeIdRoute: typeof LocaleCoffeesCoffeeIdRoute
   LocaleCoffeesNewRoute: typeof LocaleCoffeesNewRoute
   LocaleCoffeesIndexRoute: typeof LocaleCoffeesIndexRoute
+  LocaleCoffeesCoffeeIdEditRoute: typeof LocaleCoffeesCoffeeIdEditRoute
 }
 
 const LocaleRouteRouteChildren: LocaleRouteRouteChildren = {
@@ -161,6 +182,7 @@ const LocaleRouteRouteChildren: LocaleRouteRouteChildren = {
   LocaleCoffeesCoffeeIdRoute: LocaleCoffeesCoffeeIdRoute,
   LocaleCoffeesNewRoute: LocaleCoffeesNewRoute,
   LocaleCoffeesIndexRoute: LocaleCoffeesIndexRoute,
+  LocaleCoffeesCoffeeIdEditRoute: LocaleCoffeesCoffeeIdEditRoute,
 }
 
 const LocaleRouteRouteWithChildren = LocaleRouteRoute._addFileChildren(

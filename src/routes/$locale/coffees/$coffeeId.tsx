@@ -68,14 +68,23 @@ function CoffeeDetailPage() {
   return (
     <section className="flex flex-col gap-4">
       <CoffeeDetail coffee={query.data} locale={locale} />
-      <Link
-        to="/$locale/coffees"
-        params={{ locale }}
-        search={{ page: 0 }}
-        className="text-muted-foreground text-sm"
-      >
-        ← Tous les cafés
-      </Link>
+      <div className="flex items-center justify-between">
+        <Link
+          to="/$locale/coffees"
+          params={{ locale }}
+          search={{ page: 0 }}
+          className="text-muted-foreground text-sm"
+        >
+          ← Tous les cafés
+        </Link>
+        <Link
+          to="/$locale/coffees/$coffeeId/edit"
+          params={{ locale, coffeeId }}
+          className="text-sm underline underline-offset-4"
+        >
+          Modifier
+        </Link>
+      </div>
     </section>
   )
 }

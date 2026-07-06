@@ -3,8 +3,10 @@
 // (api, components, hooks, queries, schemas) ne s'importent jamais directement.
 export { CoffeeCreateForm } from './components/coffee-create-form'
 export { CoffeeDetail } from './components/coffee-detail'
+export { CoffeeEditForm } from './components/coffee-edit-form'
 export { CoffeeList } from './components/coffee-list'
 export { useCreateCoffee } from './hooks/use-create-coffee'
+export { useUpdateCoffee } from './hooks/use-update-coffee'
 export {
   coffeeDetailOptions,
   coffeeFromCache,
