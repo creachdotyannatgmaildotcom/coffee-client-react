@@ -13,3 +13,4 @@ Pour refaire tout le parcours depuis zéro, commande par commande : [le tutoriel
 | 03 | UI Foundation | [03-ui-foundation.md](./03-ui-foundation.md) | `step-03-ui-foundation` |
 | 04 | Testing | — | `step-04-testing` |
 | 05 | Lint hybride (ESLint + React Compiler) | [05-eslint-hybride.md](./05-eslint-hybride.md) | `step-05-eslint-hybride` |
+| 06 | Routage (TanStack Router + proxy API) | [06-router.md](./06-router.md) | `step-06-router` |

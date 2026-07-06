@@ -6,6 +6,7 @@ import tseslint from 'typescript-eslint'
 // (eslint-plugin-react-hooks). Format, tri des imports et lint généraliste
 // restent portés par Biome — aucune règle de style ici.
 export default tseslint.config({
+  ignores: ['src/routeTree.gen.ts'],
   files: ['src/**/*.{ts,tsx}'],
   extends: [reactHooks.configs.flat['recommended-latest']],
   languageOptions: {

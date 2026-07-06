@@ -16,6 +16,7 @@ Ce qu'on construit : le squelette d'une application React moderne (juillet 2026)
 | 03 | UI : Tailwind CSS v4, shadcn/ui (Button, Card, Skeleton) | [steps/03-ui-foundation.md](./steps/03-ui-foundation.md) |
 | 04 | Tests : Vitest + React Testing Library | — |
 | 05 | Lint hybride : ESLint minimal pour le React Compiler | [steps/05-eslint-hybride.md](./steps/05-eslint-hybride.md) |
+| 06 | Routage : TanStack Router + proxy API | [steps/06-router.md](./steps/06-router.md) |
 
 > **Convention de lecture** : les blocs `bash` sont des commandes à taper dans le terminal,
 > depuis le dossier du projet (sauf mention contraire). Les blocs avec un nom de fichier en
