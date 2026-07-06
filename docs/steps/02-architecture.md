@@ -8,6 +8,8 @@
 - **Alias `@/`** : des imports absolus (`@/features/coffees`) plutôt que relatifs (`../../../features/coffees`) survivent aux déplacements de fichiers et restent lisibles à n'importe quelle profondeur.
 - **Règle de lint sur les frontières** : une convention non vérifiée par l'outillage finit toujours par être violée sous pression de deadline. `noRestrictedImports` (Biome) avec des patterns glob sur `@/features/*/api/*` etc. transforme la convention en erreur de build — testée et validée empiriquement avant intégration (un import direct dans `coffees/api/` depuis une autre feature est rejeté, un import via le barrel `@/features/coffees` passe).
 
+> **Note de renommage (étape 07)** : le dossier `stores/` prévu ici a été renommé `queries/` au moment de brancher TanStack Query — l'état serveur vit dans le cache de Query (queryOptions, key factory), pas dans des stores. La règle `noRestrictedImports` et le barrel ont été mis à jour en conséquence.
+
 **Ce qui a été ajouté** :
 - Squelette de dossiers : `src/app/`, `src/features/coffees/{api,components,hooks,schemas,stores}/`, `src/shared/{ui,lib,hooks,config}/`, `src/routes/`, `src/types/` (fichiers `.gitkeep` pour les dossiers encore vides — Git ne suit pas les répertoires sans contenu).
 - `src/features/coffees/index.ts` : barrel public de la feature, pour l'instant vide (`export {}`), qui sera complété au fil des jalons suivants (schémas, hooks, composants exposés).

@@ -1,17 +1,27 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import type { QueryClient } from '@tanstack/react-query'
+import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
 import { lazy, Suspense } from 'react'
 
 // Les devtools ne sont chargées qu'en dev : jamais en prod, ni pendant les tests.
-const RouterDevtools =
-  import.meta.env.PROD || import.meta.env.TEST
-    ? () => null
-    : lazy(() =>
-        import('@tanstack/react-router-devtools').then((mod) => ({
-          default: mod.TanStackRouterDevtools,
-        })),
-      )
+const devtoolsDisabled = import.meta.env.PROD || import.meta.env.TEST
 
-export const Route = createRootRoute({
+const RouterDevtools = devtoolsDisabled
+  ? () => null
+  : lazy(() =>
+      import('@tanstack/react-router-devtools').then((mod) => ({
+        default: mod.TanStackRouterDevtools,
+      })),
+    )
+
+const QueryDevtools = devtoolsDisabled
+  ? () => null
+  : lazy(() =>
+      import('@tanstack/react-query-devtools').then((mod) => ({
+        default: mod.ReactQueryDevtools,
+      })),
+    )
+
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   component: RootLayout,
 })
 
@@ -21,6 +31,7 @@ function RootLayout() {
       <Outlet />
       <Suspense>
         <RouterDevtools />
+        <QueryDevtools />
       </Suspense>
     </>
   )

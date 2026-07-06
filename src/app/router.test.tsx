@@ -1,18 +1,11 @@
-import { createMemoryHistory, RouterProvider } from '@tanstack/react-router'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
-import { createAppRouter } from '@/app/router'
-
-function renderAt(url: string) {
-  const router = createAppRouter(createMemoryHistory({ initialEntries: [url] }))
-  render(<RouterProvider router={router} />)
-  return router
-}
+import { renderAt } from '@/test/render'
 
 describe('routeur', () => {
   it('redirige / vers /fr et affiche la page d’accueil', async () => {
-    const router = renderAt('/')
+    const { router } = renderAt('/')
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Coffee Client' })).toBeVisible()
     expect(screen.getByText('Fondations UI')).toBeVisible()
@@ -20,7 +13,7 @@ describe('routeur', () => {
   })
 
   it('sert la page d’accueil sous /en', async () => {
-    const router = renderAt('/en')
+    const { router } = renderAt('/en')
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Coffee Client' })).toBeVisible()
     expect(router.state.location.pathname).toBe('/en')
@@ -35,7 +28,7 @@ describe('routeur', () => {
 
   it('un lien typé change de locale', async () => {
     const user = userEvent.setup()
-    const router = renderAt('/fr')
+    const { router } = renderAt('/fr')
     await screen.findByRole('heading', { level: 1, name: 'Coffee Client' })
 
     await user.click(screen.getByRole('link', { name: 'en' }))

@@ -29,8 +29,8 @@
                   "@/features/*/api/*",
                   "@/features/*/components/*",
                   "@/features/*/hooks/*",
-                  "@/features/*/schemas/*",
-                  "@/features/*/stores/*"
+                  "@/features/*/queries/*",
+                  "@/features/*/schemas/*"
                 ],
                 "message": "Importer une feature uniquement via son barrel public (index.ts) — jamais ses sous-dossiers internes."
               }

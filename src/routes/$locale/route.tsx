@@ -18,6 +18,16 @@ function LocaleLayout() {
             Coffee Client
           </Link>
         </h1>
+        <nav aria-label="Principal" className="text-sm">
+          <Link
+            to="/$locale/coffees"
+            params={{ locale }}
+            className="text-muted-foreground"
+            activeProps={{ className: 'font-semibold text-foreground' }}
+          >
+            Cafés
+          </Link>
+        </nav>
         <nav aria-label="Langue" className="flex gap-2 text-sm">
           {locales.map((code) => (
             <Link
