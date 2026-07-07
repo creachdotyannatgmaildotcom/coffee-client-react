@@ -782,6 +782,12 @@ export type { Coffee, CoffeePage } from './schemas/coffee'
 Trois issues possibles, trois rendus : donnée → liste ; chargement → squelette ; panne →
 `errorComponent` de la route (le `throw query.error` relance l'erreur vers cette boundary).
 
+> ⚠️ **Nouveau fichier, nouveau dossier** : `src/routes/$locale/coffees/index.tsx` — à ne
+> pas confondre avec `src/routes/$locale/index.tsx` (la page d'accueil, qui ne change pas).
+> Indice en cas de doute : le plugin réécrit le chemin dans `createFileRoute('…')` pour
+> coller à l'emplacement réel du fichier — s'il n'affiche pas `'/$locale/coffees/'`, le
+> contenu est dans le mauvais fichier.
+
 ```tsx
 // src/routes/$locale/coffees/index.tsx
 import { useQuery, useQueryErrorResetBoundary } from '@tanstack/react-query'
