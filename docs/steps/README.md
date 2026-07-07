@@ -3,7 +3,8 @@
 Sommaire des étapes de construction du client React pour l'API CoffeeMachine3.
 Chaque étape est documentée, validée (`typecheck && lint && test && build`), commitée et taguée.
 
-Pour refaire tout le parcours depuis zéro, commande par commande : [le tutoriel complet](../TUTORIEL.md).
+Pour refaire tout le parcours depuis zéro, commande par commande : [le tutoriel de mise en place](../TUTORIEL.md)
+(étapes 00-04), puis [le tutoriel de l'application](../TUTORIEL-APP.md) (à partir de `coffee-client-base`).
 
 | # | Titre | Fiche | Tag git |
 |---|-------|-------|---------|

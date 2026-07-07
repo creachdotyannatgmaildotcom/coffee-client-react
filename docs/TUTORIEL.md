@@ -5,6 +5,10 @@ Ce tutoriel s'adresse à un **débutant complet** : il part de la toute premièr
 À la fin de **chaque étape**, le projet compile, se lance et passe toutes les vérifications —
 on ne passe jamais à l'étape suivante avec un projet cassé.
 
+> Ce document couvre la **mise en place du projet** (outillage, étapes 00 à 04). Pour
+> **coder l'application elle-même** (routeur, données, pages, formulaires — étapes 05 à 11)
+> à partir du dossier `coffee-client-base`, suivre **[TUTORIEL-APP.md](./TUTORIEL-APP.md)**.
+
 Ce qu'on construit : le squelette d'une application React moderne (juillet 2026) nommée
 `coffee-client`, avec :
 
@@ -215,6 +219,8 @@ pnpm remove eslint @eslint/js eslint-plugin-react-hooks eslint-plugin-react-refr
 # npm : npm uninstall eslint @eslint/js eslint-plugin-react-hooks eslint-plugin-react-refresh typescript-eslint globals
 rm eslint.config.js
 pnpm add -D @biomejs/biome
+pnpm add -D -E @biomejs/biome@2.4.16
+
 # npm : npm install -D @biomejs/biome
 ```
 
