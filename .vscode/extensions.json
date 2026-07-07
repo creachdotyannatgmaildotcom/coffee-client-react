@@ -1,0 +1,4 @@
+{
+  // VS Code proposera l'installation à l'ouverture du dossier.
+  "recommendations": ["biomejs.biome"]
+}

@@ -53,6 +53,9 @@ La base fournit **tout l'outillage, prêt à l'emploi** :
 - le **kit UI** shadcn dans `src/shared/ui/` (`Button`, `Card`, `Input`, `Label`,
   `Skeleton`) et Tailwind v4 (`src/index.css`) ;
 - **Vitest + React Testing Library + MSW** (dépendances installées, setup partiel) ;
+- les **réglages VS Code** (`.vscode/`) : Biome formate et organise les imports **à la
+  sauvegarde** (VS Code propose d'installer l'extension à l'ouverture du dossier) — plus
+  personne n'a besoin de penser au formatage, c'est le contrat d'un formateur ;
 - toutes les dépendances de l'application déjà dans `package.json` : TanStack Router et
   Query, Zod, react-hook-form… **aucun `pnpm add` ne sera nécessaire**.
 
@@ -2479,6 +2482,11 @@ traductions).
 
 ### En cas de problème
 
+- **`error TS2305: Module '…' has no exported member '…'` ou un test qui ne trouve pas un
+  élément pourtant écrit** : vérifier que chaque bloc de code a bien été collé dans **son**
+  fichier — le chemin en première ligne de chaque bloc (`// src/app/router.ts`) est le
+  fichier cible. Les erreurs de ce type viennent presque toujours d'un contenu collé dans
+  le mauvais fichier (le test dans `router.ts`, la page d'accueil dans `routes/index.tsx`…).
 - **`Cannot find module '@/routeTree.gen'`** ou une route qui « n'existe pas » pour le
   typage : lancer `pnpm dev` quelques secondes — le plugin régénère `src/routeTree.gen.ts`
   à chaque démarrage. À refaire après **chaque création de fichier de route**.
