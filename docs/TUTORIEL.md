@@ -27,6 +27,13 @@ Ce qu'on construit : le squelette d'une application React moderne (juillet 2026)
 > depuis le dossier du projet (sauf mention contraire). Les blocs avec un nom de fichier en
 > titre sont le **contenu complet** du fichier à créer ou remplacer.
 
+> **pnpm ou npm ?** Chaque commande pnpm est accompagnée de son équivalent npm en
+> commentaire (`# npm : …`). Règle générale : `pnpm <script>` = `npm run <script>`,
+> `pnpm add` = `npm install`, `pnpm exec`/`pnpm dlx` = `npx`. **Choisissez un gestionnaire
+> et gardez-le du début à la fin** (ne jamais mélanger les deux dans un même projet : chacun
+> a son fichier de verrouillage, `pnpm-lock.yaml` ou `package-lock.json`). Le repo de
+> référence utilise pnpm.
+
 ---
 
 ## Étape 0 — Prérequis (une seule fois par machine)
@@ -43,7 +50,7 @@ Il faut trois outils : **Node.js** (exécute JavaScript hors navigateur), **pnpm
    node --version   # doit afficher v24.x.x ou plus
    ```
 
-2. **pnpm 11 ou plus** :
+2. **pnpm 11 ou plus** (inutile si vous choisissez npm, livré avec Node.js) :
 
    ```bash
    npm install -g pnpm
@@ -62,8 +69,11 @@ Il faut trois outils : **Node.js** (exécute JavaScript hors navigateur), **pnpm
 
 ```bash
 pnpm create vite@latest coffee-client --template react-ts
+# npm : npm create vite@latest coffee-client -- --template react-ts
+#       (noter le « -- » : il sépare les options de npm de celles de create-vite)
 cd coffee-client
 pnpm install
+# npm : npm install
 git init
 ```
 
@@ -71,6 +81,7 @@ Lancer le serveur de développement pour vérifier que tout fonctionne :
 
 ```bash
 pnpm dev
+# npm : npm run dev
 ```
 
 Ouvrir <http://localhost:5173> : la page de démonstration Vite s'affiche.
@@ -126,6 +137,7 @@ Le React Compiler mémoïse automatiquement composants et hooks au build : on n'
 
 ```bash
 pnpm add -D @rolldown/plugin-babel babel-plugin-react-compiler @babel/core @types/babel__core
+# npm : npm install -D @rolldown/plugin-babel babel-plugin-react-compiler @babel/core @types/babel__core
 ```
 
 ```ts
@@ -154,6 +166,8 @@ Dans `package.json`, section `"scripts"`, ajouter une ligne :
 pnpm typecheck   # aucune erreur de typage
 pnpm build       # génère un build de production dans dist/
 pnpm dev         # http://localhost:5173 affiche "Coffee Client"
+
+# npm : npm run typecheck · npm run build · npm run dev
 ```
 
 Premier commit :
@@ -198,8 +212,10 @@ On supprime ESLint (installé par le template) et on installe Biome :
 
 ```bash
 pnpm remove eslint @eslint/js eslint-plugin-react-hooks eslint-plugin-react-refresh typescript-eslint globals
+# npm : npm uninstall eslint @eslint/js eslint-plugin-react-hooks eslint-plugin-react-refresh typescript-eslint globals
 rm eslint.config.js
 pnpm add -D @biomejs/biome
+# npm : npm install -D @biomejs/biome
 ```
 
 > Si `pnpm remove` se plaint d'un paquet absent, retirer ce nom de la commande : la liste
@@ -251,6 +267,7 @@ Formater tout le projet une première fois avec les nouvelles règles :
 
 ```bash
 pnpm exec biome check --write .
+# npm : npx biome check --write .
 ```
 
 Biome va signaler une erreur dans `src/main.tsx` : le template utilise
@@ -311,6 +328,9 @@ Dans `package.json`, juste après `"type": "module"`, ajouter :
 
 Tout le monde (et la CI) utilise ainsi les mêmes versions d'outils.
 
+> **npm** : omettre la ligne `packageManager` et remplacer `"pnpm": ">=11"` par
+> `"npm": ">=10"` dans `engines`.
+
 ### 01.5 Scripts qualité
 
 Remplacer la section `"scripts"` de `package.json` par :
@@ -337,6 +357,9 @@ Deux pièges évités ici :
 - On utilise **`biome ci .`** et non `biome lint` : `biome ci` vérifie le lint **et** le
   formatage **et** l'ordre des imports, sans rien modifier — exactement ce qu'une CI doit faire.
 
+> **npm** : dans le script `verify`, écrire `npm run` devant les scripts :
+> `"verify": "npm run typecheck && biome ci . && npm run build"`.
+
 ### 01.6 Hooks git : Husky + lint-staged
 
 À chaque `git commit`, Biome corrige automatiquement les fichiers stagés. Impossible de
@@ -344,7 +367,9 @@ committer du code mal formaté, et c'est rapide car seuls les fichiers stagés s
 
 ```bash
 pnpm add -D husky lint-staged
+# npm : npm install -D husky lint-staged
 pnpm exec husky init
+# npm : npx husky init
 ```
 
 `husky init` a créé `.husky/pre-commit` — remplacer son contenu par :
@@ -353,6 +378,8 @@ pnpm exec husky init
 # .husky/pre-commit
 pnpm exec lint-staged
 ```
+
+> **npm** : écrire `npx lint-staged` à la place dans `.husky/pre-commit`.
 
 Puis déclarer la configuration lint-staged dans `package.json` (au même niveau que
 `"scripts"`) :
@@ -398,10 +425,14 @@ jobs:
       - run: pnpm run verify
 ```
 
+> **npm** : supprimer l'étape `pnpm/action-setup`, mettre `cache: npm` dans `setup-node`,
+> puis `npm ci` (installation propre depuis `package-lock.json`) et `npm run verify`.
+
 ### ✅ Vérifier l'étape 01
 
 ```bash
 pnpm run verify   # typecheck + biome ci + build : tout vert
+# npm : npm run verify
 git add -A
 git commit -m "feat(tooling): strict TS, Biome, Husky, lint-staged, CI"
 # → le hook pre-commit se déclenche : lint-staged passe sur les fichiers stagés
@@ -476,6 +507,7 @@ Node) :
 
 ```bash
 pnpm add -D @types/node
+# npm : npm install -D @types/node
 ```
 
 ```ts
@@ -536,13 +568,14 @@ confiance). Ajouter temporairement dans `src/App.tsx` :
 import { x } from '@/features/coffees/api/client'
 ```
 
-`pnpm lint` doit afficher l'erreur `noRestrictedImports` avec notre message. Retirer la
-ligne : `pnpm lint` repasse au vert.
+`pnpm lint` (npm : `npm run lint`) doit afficher l'erreur `noRestrictedImports` avec notre
+message. Retirer la ligne : le lint repasse au vert.
 
 ### ✅ Vérifier l'étape 02
 
 ```bash
 pnpm run verify
+# npm : npm run verify
 git add -A
 git commit -m "feat(architecture): feature-based skeleton, @/ alias, import boundaries"
 git tag step-02-architecture
@@ -559,6 +592,7 @@ code** (shadcn/ui sur primitives Base UI), et un thème clair/sombre par variabl
 
 ```bash
 pnpm add tailwindcss @tailwindcss/vite tw-animate-css
+# npm : npm install tailwindcss @tailwindcss/vite tw-animate-css
 ```
 
 Dans `vite.config.ts`, ajouter le plugin :
@@ -600,6 +634,7 @@ primitives d'accessibilité (focus, clavier, ARIA) viennent de Base UI (`@base-u
 
 ```bash
 pnpm dlx shadcn@latest init
+# npm : npx shadcn@latest init
 ```
 
 Répondre aux questions : couleur de base **neutral**, variables CSS **oui**. Le CLI crée
@@ -663,6 +698,7 @@ export function cn(...inputs: ClassValue[]) {
 
 ```bash
 pnpm dlx shadcn@latest add button card skeleton
+# npm : npx shadcn@latest add button card skeleton
 ```
 
 Le CLI copie `button.tsx`, `card.tsx`, `skeleton.tsx` dans `src/shared/ui/` et installe
@@ -705,6 +741,7 @@ export default App
 ```bash
 pnpm run verify
 pnpm dev
+# npm : npm run verify · npm run dev
 ```
 
 Dans le navigateur : une carte à bordure et coins arrondis, deux barres de squelette qui
@@ -730,6 +767,7 @@ détails d'implémentation.
 
 ```bash
 pnpm add -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
+# npm : npm install -D vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
 ```
 
 - `jsdom` : un faux navigateur en Node, pour rendre les composants sans Chrome ;
@@ -811,6 +849,8 @@ Dans `package.json`, ajouter les deux scripts de test et insérer `pnpm test` da
 "verify": "pnpm typecheck && biome ci . && pnpm test && pnpm build",
 ```
 
+> **npm** : `"verify": "npm run typecheck && biome ci . && npm test && npm run build"`.
+
 La CI exécute déjà `pnpm run verify` : les tests y tournent donc automatiquement, sans
 toucher à `ci.yml`.
 
@@ -818,6 +858,7 @@ toucher à `ci.yml`.
 
 ```bash
 pnpm test
+# npm : npm test
 ```
 
 Sortie attendue :
@@ -831,6 +872,7 @@ Puis la vérification complète et le commit :
 
 ```bash
 pnpm run verify   # typecheck ✓ · biome ci ✓ · 1 test ✓ · build ✓
+# npm : npm run verify
 git add -A
 git commit -m "feat(testing): Vitest + React Testing Library setup with first test"
 git tag step-04-testing
@@ -856,6 +898,8 @@ Le cycle de travail à retenir pour la suite :
 pnpm dev          # coder avec rechargement à chaud
 pnpm test:watch   # tests relancés à chaque sauvegarde
 pnpm run verify   # avant chaque commit important : tout doit être vert
+
+# npm : npm run dev · npm run test:watch · npm run verify
 ```
 
 ### En cas de problème
@@ -864,7 +908,8 @@ pnpm run verify   # avant chaque commit important : tout doit être vert
   Biome 2.4, Vitest 4, Tailwind 4.3, Node 24, pnpm 11. Comparer votre `package.json` avec
   celui du repo de référence en cas de comportement différent.
 - **`pnpm ci` réinstalle au lieu de vérifier** : c'est normal, `ci` est une commande interne
-  de pnpm — la commande de vérification du projet est `pnpm run verify`.
+  de pnpm (comme `npm ci` côté npm) — la commande de vérification du projet est
+  `pnpm run verify` / `npm run verify`.
 - **Biome signale une erreur sur `@theme` ou `@apply`** : vérifier
   `css.parser.tailwindDirectives: true` dans `biome.json` (étape 03.2).
 - **`Cannot find module '@/…'`** : l'alias doit être déclaré aux deux endroits —
